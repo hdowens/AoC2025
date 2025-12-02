@@ -11,10 +11,10 @@ def part1(data):
     return invalid_id_sum
 
 def part2_invalid(num):
-    s = str(num)
-    length = len(s)
+    num = str(num)
+    length = len(num)
     for i in range(1, (length // 2) + 1):
-        if length % i == 0 and s[:i] * (length // i) == s:
+        if length % i == 0 and num[:i] * (length // i) == num:
             return True
 
     return False
