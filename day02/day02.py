@@ -6,27 +6,28 @@ def part1(data):
     for start, end in data:
         for num in range(int(start), int(end)+1):
             num = str(num)
-
-            substrs = set(
-                num[0:r]
-                for r in range(1, len(num) // 2 + 1)
-                if len(num) % len(num[0:r]) == 0
-            )
-
-            if any(num.count(substr) > 1 and len(substr) * num.count(substr) == len(num) for substr in substrs):
+            if num[:len(num) // 2] == num[len(num) // 2:]:
                 invalid_id_sum += int(num)
-
     return invalid_id_sum
-    
+
+def part2_invalid(num):
+    s = str(num)
+    length = len(s)
+    for i in range(1, (length // 2) + 1):
+        if length % i == 0 and s[:i] * (length // i) == s:
+            return True
+
+    return False
+
+
 def part2(data):
     invalid_id_sum = 0
     for start, end in data:
         for num in range(int(start), int(end)+1):
-            num = str(num)
-            if num[:len(num) // 2] == num[len(num) // 2:]:
-                invalid_id_sum += int(num)
+            if part2_invalid(num):
+                invalid_id_sum += num
     return invalid_id_sum
-    
+
 
 def main(file_path: Path) -> None:
     
