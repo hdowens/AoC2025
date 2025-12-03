@@ -2,24 +2,8 @@ from pathlib import Path
 from argparse import ArgumentParser
 from itertools import combinations
 
-def main(file_path: Path) -> None:
-    
-    with open(file_path, "r") as f:
-        data = [l.strip() for l in f.readlines()]
-
-
-    # seems like its the largest two digit number you can make from 
-    # consecutive digits? -> combinations
-
-    print("Part 1: ", end="")
-    print(sum(
-        max([int(''.join(i)) for i in combinations(rating, 2)])
-        for rating in data
-    ))
-
-    # cant brute force part 2 :(
+def solve(data, joltage_length: int):
     tot = 0
-    str_len_wanted = 12
     for rating in data:
         potent = ""
         max_dig = 9
@@ -31,9 +15,8 @@ def main(file_path: Path) -> None:
             #length of potential joltage
             #plus length of where it is in the string
             #should be greater than or equal to the length we want
-
-            elif len(potent) + (len(rating) - found) >= str_len_wanted:
-                if len(potent) < str_len_wanted:
+            elif len(potent) + (len(rating) - found) >= joltage_length:
+                if len(potent) < joltage_length:
                     potent += rating[found]
                     rating = rating[found+1:]
                     max_dig = 9
@@ -42,10 +25,16 @@ def main(file_path: Path) -> None:
             else:
                 max_dig -= 1
 
-        #print(f"{potent}")
         tot += int(potent) 
+    return tot
 
-    print(f"Tot: {tot}")
+def main(file_path: Path) -> None:
+    
+    with open(file_path, "r") as f:
+        data = [l.strip() for l in f.readlines()]
+
+    print(f"Part 1: {solve(data, joltage_length=2)}")
+    print(f"Part 2: {solve(data, joltage_length=12)}")
 
 if __name__ == "__main__":
     parser = ArgumentParser()
