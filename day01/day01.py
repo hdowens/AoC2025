@@ -44,8 +44,8 @@ def main(file_path: Path) -> None:
     with open(file_path, "r") as f:
         data = [l.strip() for l in f.readlines()]
 
-    print(f"Part 1:    {part1(data)}")
-    print(f"Part 2:    {part2(data)}")
+    print(f"Part 1: {part1(data)}")
+    print(f"Part 2: {part2(data)}")
 
 
 
